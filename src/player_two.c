@@ -42,10 +42,10 @@ int case_of_player_two(char *answer)
     print_map(sig->enemy_map);
     signal(SIGUSR1, receive_message);
     signal(SIGUSR2, receive_message);
-    sig->boll = 1;
     write(1, "attack: ", 8);
     if (getline(&answer, &len,stdin) == EOF)
         return (0);
+    sig->boll = 0;
     send_signal_player_two(answer);
     if (is_there_boat(sig->map))
         printf("ok\n");

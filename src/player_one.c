@@ -42,7 +42,6 @@ int case_of_player_one(char *answer)
     print_map(sig->enemy_map);
     signal(SIGUSR1, receive_message);
     signal(SIGUSR2, receive_message);
-    sig->boll = 1;
     write(1, "attack: ", 8);
     if (getline(&answer, &len,stdin) == EOF)
         return (0);
