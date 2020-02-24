@@ -17,17 +17,16 @@ void receive_message(int signum)
 {
     static int count = 0;
 
+    signal(SIGUSR1, receive_message);
+    signal(SIGUSR2, receive_message);
     if (sig->boll == 0)
         count = 0;
     if (signum == SIGUSR1)
         sig->message |= (1 << count);
     if (signum == SIGUSR2)
         sig->message |= (0 << count);
-    if (sig->message & (1 << count))
-        my_printf("1");
-    else
-        my_printf("0");
     count++;
+    usleep(500);
 }
 
 int game(int ac, char **av)
@@ -47,19 +46,21 @@ int game(int ac, char **av)
 char **is_there_boat(char **array)
 {
     char *coord = malloc(sizeof(char) * 3);
-    int count = 3;
+    int count = 4;
 
     coord[2] = '\0';
     coord[1] = '1';
     coord[0] = '@';
-    for (; sig->message & count == 1; count++, coord[0]++);
-    for (; sig->message & count != 1; count++, coord[1]++);
+    for (; sig->message >> count & 1 == 1; count++, coord[0]++);
+    for (; sig->message >> count & 1 != 1; count++, coord[1]++);
     if (array[coord[1] - 49][coord[0] - 65] != '.') {
-        my_printf("hit\n");
+        my_printf("%s: hit\n", coord);
         get_coord(coord[0], coord[1], array, 'x');
+        free(coord);
         return (array);
     }
     get_coord(coord[0], coord[1], array, 'o');
-    my_printf("miss\n");
+    my_printf("%s: miss\n", coord);
+    free(coord);
     return (array);
 }
