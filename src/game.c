@@ -19,8 +19,6 @@ void receive_message(int signum)
 
     if (sig->boll == 0)
         count = 0;
-    if (sig->boll == 0)
-        count = 0;
     if (signum == SIGUSR1)
         sig->message |= (1 << count);
     if (signum == SIGUSR2)
@@ -32,7 +30,7 @@ void receive_message(int signum)
     count++;
 }
 
-int game(int ac, char **av, char **array)
+int game(int ac, char **av)
 {
     char *answer;
 
@@ -46,8 +44,16 @@ int game(int ac, char **av, char **array)
     }
 }
 
-char **is_there_boat(char **array, char *coord)
+char **is_there_boat(char **array)
 {
+    char *coord = malloc(sizeof(char) * 3);
+    int count = 3;
+
+    coord[2] = '\0';
+    coord[1] = '1';
+    coord[0] = '@';
+    for (; sig->message & count == 1; count++, coord[0]++);
+    for (; sig->message & count != 1; count++, coord[1]++);
     if (array[coord[1] - 49][coord[0] - 65] != '.') {
         my_printf("hit\n");
         get_coord(coord[0], coord[1], array, 'x');

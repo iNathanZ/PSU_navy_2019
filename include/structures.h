@@ -19,13 +19,12 @@ typedef struct coord
 
 struct bin
 {
+    char **map;
+    char **enemy_map;
     int message;
     int boll;
     int pid_player_two;
     int pid_player_one;
-    int type_of_data;
-    int pos_letter;
-    int pos_number;
     char **av;
     int ac;
 };typedef struct bin bin_t;

@@ -15,7 +15,7 @@ SRC 	=	src/navy.c				\
 			src/load_and_fill.c 	\
 			src/game.c 				\
 			src/player_one.c 		\
-			src/player_two.C 		\
+			src/player_two.c 		\
 			src/coord.c 			\
 			src/my_strlen.c 		\
 

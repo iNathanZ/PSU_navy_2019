@@ -20,7 +20,7 @@ char **mem_alloc_2d_array(void)
     int i = 0;
     int j = 0;
 
-    char **array = malloc(sizeof(char*) * 9);
+    char **array = malloc(sizeof(char *) * 9);
     for (i = 0 ; i < 8 ; i++) {
         array[i] = malloc(sizeof(char) * 9);
         j = 0;

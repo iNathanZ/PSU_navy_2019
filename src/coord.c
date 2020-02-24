@@ -7,7 +7,6 @@
 
 #include "../include/my.h"
 #include "../include/structures.h"
-
 char **get_coord(char coord1, char coord2, char **arr, char boat)
 {
     arr[coord2 - 49][coord1 - 65] = boat;
