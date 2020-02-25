@@ -17,21 +17,19 @@ void receive_message(int signum)
 {
     signal(SIGUSR1, receive_message);
     signal(SIGUSR2, receive_message);
-    if (sig->boll == 0) {
-        printf("c'est bon count = 0\n");
+    if (sig->boll == 0)
         sig->message = 0;
-    }
     if (signum == SIGUSR1)
         sig->message |= (1 << sig->boll);
     if (signum == SIGUSR2)
         sig->message |= (0 << sig->boll);
     sig->boll++;
-    usleep(500);
+    (usleep(6000);
 }
 
 int game(int ac, char **av)
 {
-    char *answer;
+    char *answer = NULL;
 
     while (1) {
         if (ac == 2) {
@@ -62,7 +60,7 @@ char **is_there_boat(char **array)
         return (array);
     }
     get_coord(coord[0], coord[1], array, 'o');
-    my_printf("%s: miss\n", coord);
+    my_printf("%s: missed\n", coord);
     free(coord);
     return (array);
 }
