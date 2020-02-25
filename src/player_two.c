@@ -52,6 +52,11 @@ int case_of_player_two(char *answer)
     write(1, "attack: ", 8);
     if (getline(&answer, &len,stdin) == EOF)
         return (0);
+    while ((answer[0] < 65 && answer[0] > 72) || (answer[1] < 49 && answer[1] > 56)) {
+        write (1, "wrong position\nattack: ", 23);
+        if (getline(&answer, &len,stdin) == EOF)
+        return (0);
+    }
     sig->boll = 0;
     send_signal_player_two(answer);
     if (is_there_boat(sig->map))
