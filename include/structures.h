@@ -27,7 +27,6 @@ struct bin
     int pid_player_one;
     char **av;
     int ac;
-    int first;
 };typedef struct bin bin_t;
 
 bin_t *sig;

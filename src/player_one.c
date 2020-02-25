@@ -40,6 +40,14 @@ void send_signal_player_one(char *answer)
     pause();
 }
 
+void stop_for_me(int pid)
+{
+    for (int count = 0; count < 3; count++) {
+        kill(pid, SIGUSR1);
+        usleep(5000);
+    }
+}
+
 int case_of_player_one(char *answer)
 {
     ssize_t len = 0;
@@ -51,8 +59,10 @@ int case_of_player_one(char *answer)
     signal(SIGUSR1, receive_message);
     signal(SIGUSR2, receive_message);
     write(1, "attack: ", 8);
-    if (getline(&answer, &len,stdin) == EOF)
+    if (getline(&answer, &len,stdin) == EOF) {
+        stop_for_me(sig->pid_player_two);
         return (0);
+    }
     // while ((answer[0] < 65 && answer[0] > 72) && (answer[1] < 49 &&
     // answer[1] > 56) && answer[2] != '\0') {
     //     write (1, "wrong position\nattack: ", 23);
@@ -60,6 +70,7 @@ int case_of_player_one(char *answer)
     //     return (0);
     // }
     send_signal_player_one(answer);
-    is_there_boat(sig->map);
+    if (is_there_boat(sig->map) == 0)
+        return (0);
     sig->boll = 0;
 }

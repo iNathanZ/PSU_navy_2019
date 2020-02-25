@@ -30,11 +30,8 @@ void send_signal_player_two(char *answer)
     }
     value = answer[1] - 49;
     for (int tmp = 0; tmp < 3; tmp++) {
-        printf("value = %d\n", value >> tmp & 1);
-        if ((value >> tmp & 1) == 1) {
-            printf("c'est 1\n");
+        if ((value >> tmp & 1) == 1)
             kill(sig->pid_player_one, SIGUSR1);
-        }
         else
             kill(sig->pid_player_one, SIGUSR2);
         usleep(5000);
@@ -53,9 +50,13 @@ int case_of_player_two(char *answer)
     print_map(sig->enemy_map);
     signal(SIGUSR1, receive_message);
     signal(SIGUSR2, receive_message);
-    write(1, "attack: ", 8);
-    if (getline(&answer, &len,stdin) == EOF)
+    if (sig->message & 7 == 7)
         return (0);
+    write(1, "attack: ", 8);
+    if (getline(&answer, &len,stdin) == EOF) {
+        stop_for_me(sig->pid_player_one);
+        return (0);
+    }
     // while ((answer[0] < 65 && answer[0] > 72) && (answer[1] < 49 &&
     // answer[1] > 56) && my_strlen(answer) != 2) {
     //     write (1, "wrong position\nattack: ", 23);
@@ -64,5 +65,6 @@ int case_of_player_two(char *answer)
     // }
     sig->boll = 0;
     send_signal_player_two(answer);
-    is_there_boat(sig->map);
+    if (is_there_boat(sig->map) == 0)
+        return (0);
 }

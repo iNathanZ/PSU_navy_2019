@@ -72,5 +72,6 @@ int main(int argc, char *argv[])
         my_printf("\nenemy connected\n");
     }
     game(argc, argv);
+    free(coord);
     return 0;
 }

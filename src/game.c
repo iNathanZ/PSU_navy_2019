@@ -37,19 +37,24 @@ int game(int ac, char **av)
                 return (0);
         }
         else
-            case_of_player_two(answer);
+            if (case_of_player_two(answer) == 0)
+                return (0);
     }
 }
 
-char **is_there_boat(char **array)
+int is_there_boat(char **array)
 {
     char *coord = malloc(sizeof(char) * 3);
-    int count = 3;
+    int count = 0;
     int value = 0;
     int mask = 0;
 
     for (int tmp = 0; tmp < sig->boll; tmp++)
         printf("mes = %d\n", sig->message >> tmp & 1);
+    for (; count < 3; count++)
+        value |= sig->message & 7;
+    if (value == 7)
+        return (0);
     coord[2] = '\0';
     mask = sig->message & 56;
     value = mask >> 3;
@@ -61,10 +66,10 @@ char **is_there_boat(char **array)
         my_printf("%s: hit\n", coord);
         get_coord(coord[0], coord[1], array, 'x');
         free(coord);
-        return (array);
+        return (1);
     }
     get_coord(coord[0], coord[1], array, 'o');
     my_printf("%s: missed\n", coord);
     free(coord);
-    return (array);
+    return (1);
 }
