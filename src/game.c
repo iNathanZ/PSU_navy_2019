@@ -51,13 +51,12 @@ char **is_there_boat(char **array)
     for (int tmp = 0; tmp < sig->boll; tmp++)
         printf("mes = %d\n", sig->message >> tmp & 1);
     coord[2] = '\0';
-    coord[1] = '0';
-    coord[0] = '@';
     mask = sig->message & 56;
     value = mask >> 3;
     coord[0] = value + 65;
-    mask = sig->message & 7;
-    printf("value = %d\n", value);
+    value = sig->message >> 6;
+    coord[1] = value + 49;
+    printf("coord 0 %c\ncoord 1 = %c\n", coord[0], coord[1]);
     if (array[coord[1] - 49][coord[0] - 65] != '.') {
         my_printf("%s: hit\n", coord);
         get_coord(coord[0], coord[1], array, 'x');

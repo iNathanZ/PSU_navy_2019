@@ -16,9 +16,10 @@
 void send_signal_player_two(char *answer)
 {
     int value = answer[0] - 65;
+
     for (int count = 0; count < 3; count++) {
-       kill(sig->pid_player_one, SIGUSR2);
-       usleep(5000);
+        kill(sig->pid_player_one, SIGUSR2);
+        usleep(5000);
     }
     for (int tmp = 0; tmp < 3; tmp++) {
         if ((value >> tmp & 1) != 1)
@@ -27,10 +28,13 @@ void send_signal_player_two(char *answer)
             kill(sig->pid_player_one, SIGUSR1);
         usleep(5000);
     }
-    value = answer[1] - 48;
+    value = answer[1] - 49;
     for (int tmp = 0; tmp < 3; tmp++) {
-        if ((value >> tmp & 1) == 1)
+        printf("value = %d\n", value >> tmp & 1);
+        if ((value >> tmp & 1) == 1) {
+            printf("c'est 1\n");
             kill(sig->pid_player_one, SIGUSR1);
+        }
         else
             kill(sig->pid_player_one, SIGUSR2);
         usleep(5000);
@@ -52,13 +56,13 @@ int case_of_player_two(char *answer)
     write(1, "attack: ", 8);
     if (getline(&answer, &len,stdin) == EOF)
         return (0);
-    while ((answer[0] < 65 || answer[0] > 72) || (answer[1] < 49 || answer[1] > 56) || my_strlen(answer) > 2) {
-        write (1, "wrong position\nattack: ", 23);
-        if (getline(&answer, &len,stdin) == EOF)
-        return (0);
-    }
+    // while ((answer[0] < 65 && answer[0] > 72) && (answer[1] < 49 &&
+    // answer[1] > 56) && my_strlen(answer) != 2) {
+    //     write (1, "wrong position\nattack: ", 23);
+    //     if (getline(&answer, &len,stdin) == EOF)
+    //     return (0);
+    // }
     sig->boll = 0;
     send_signal_player_two(answer);
-    if (is_there_boat(sig->map))
-        printf("ok\n");
+    is_there_boat(sig->map);
 }

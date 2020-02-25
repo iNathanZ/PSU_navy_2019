@@ -36,6 +36,18 @@ bin_t *create_struct(__pid_t id1, char **argv, int argc, coord_t *coord)
     return (sig);
 }
 
+void beggining(void)
+{
+    write (1, "\nmy positions:\n", 15);
+    print_map(sig->map);
+    write (1, "\nenemy’s positions:\n", 22);
+    print_map(sig->enemy_map);
+    signal(SIGUSR1, receive_message);
+    signal(SIGUSR2, receive_message);
+    pause();
+    is_there_boat(sig->map);
+}
+
 int main(int argc, char *argv[])
 {
     pid_t id1 = getpid();
@@ -52,6 +64,7 @@ int main(int argc, char *argv[])
         if (kill(my_getnbr(argv[1]), SIGUSR2) != 0)
             return (84);
         write(1, "successfuly connected\n", 22);
+        beggining();
     }
     if (argc == 2) {
         my_printf("waiting for enemy connection ...\n");
