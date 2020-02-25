@@ -15,22 +15,26 @@
 
 void send_signal_player_two(char *answer)
 {
+    int value = answer[0] - 65;
     for (int count = 0; count < 3; count++) {
-        printf("j'en ai envoyé un\n");
        kill(sig->pid_player_one, SIGUSR2);
        usleep(5000);
     }
-    for (int tmp = 0; answer[0] - tmp >= 'A'; tmp++) {
-        printf("ça c'est les lettres\n");
-        kill(sig->pid_player_one, SIGUSR1);
+    for (int tmp = 0; tmp < 3; tmp++) {
+        if ((value >> tmp & 1) != 1)
+            kill(sig->pid_player_one, SIGUSR2);
+        else
+            kill(sig->pid_player_one, SIGUSR1);
         usleep(5000);
     }
-    for (int tmp = 0; answer[1] - tmp > '0'; tmp++) {
-        printf("et ça ce sont les nombres\n");
-        kill(sig->pid_player_one, SIGUSR2);
+    value = answer[1] - 48;
+    for (int tmp = 0; tmp < 3; tmp++) {
+        if ((value >> tmp & 1) == 1)
+            kill(sig->pid_player_one, SIGUSR1);
+        else
+            kill(sig->pid_player_one, SIGUSR2);
         usleep(5000);
     }
-    kill(sig->pid_player_one, SIGUSR1);
     write(1, "waiting for enemy's attack...\n", 31);
     pause();
 }

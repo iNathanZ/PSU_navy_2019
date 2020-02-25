@@ -45,14 +45,19 @@ char **is_there_boat(char **array)
 {
     char *coord = malloc(sizeof(char) * 3);
     int count = 3;
+    int value = 0;
+    int mask = 0;
 
     for (int tmp = 0; tmp < sig->boll; tmp++)
         printf("mes = %d\n", sig->message >> tmp & 1);
     coord[2] = '\0';
     coord[1] = '0';
     coord[0] = '@';
-    for (; (sig->message >> count & 1) == 1; count++, coord[0]++);
-    for (; (sig->message >> count & 1) == 0; count++, coord[1]++);
+    mask = sig->message & 56;
+    value = mask >> 3;
+    coord[0] = value + 65;
+    mask = sig->message & 7;
+    printf("value = %d\n", value);
     if (array[coord[1] - 49][coord[0] - 65] != '.') {
         my_printf("%s: hit\n", coord);
         get_coord(coord[0], coord[1], array, 'x');

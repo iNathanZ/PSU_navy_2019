@@ -15,19 +15,26 @@
 
 void send_signal_player_one(char *answer)
 {
+     int value = answer[0] - 65;
     for (int count = 0; count < 3; count++) {
        kill(sig->pid_player_two, SIGUSR2);
        usleep(5000);
     }
-    for (int tmp = 0; answer[0] - tmp >= 'A'; tmp++) {
-        kill(sig->pid_player_two, SIGUSR1);
+    for (int tmp = 0; tmp < 3; tmp++) {
+        if ((value >> tmp & 1) != 1)
+            kill(sig->pid_player_two, SIGUSR2);
+        else
+            kill(sig->pid_player_two, SIGUSR1);
         usleep(5000);
     }
-    for (int tmp = 0; answer[1] - tmp > '0'; tmp++) {
-        kill(sig->pid_player_two, SIGUSR2);
+    value = answer[1] - 48;
+    for (int tmp = 0; tmp < 3; tmp++) {
+        if ((value >> tmp & 1) == 1)
+            kill(sig->pid_player_two, SIGUSR1);
+        else
+            kill(sig->pid_player_two, SIGUSR2);
         usleep(5000);
     }
-    kill(sig->pid_player_two, SIGUSR1);
     write(1, "waiting for enemy's attack...\n", 31);
     pause();
 }
