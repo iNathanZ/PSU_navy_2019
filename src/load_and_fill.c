@@ -21,7 +21,7 @@ char **mem_alloc_2d_array(void)
     int j = 0;
 
     char **array = malloc(sizeof(char *) * 9);
-    for (i = 0 ; i < 8 ; i++) {
+    for (; i < 8 ; i++) {
         array[i] = malloc(sizeof(char) * 9);
         j = 0;
         for (; j != 8 ; j++)

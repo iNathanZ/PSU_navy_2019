@@ -28,6 +28,7 @@ bin_t *create_struct(__pid_t id1, char **argv, int argc, coord_t *coord)
     sig->av = argv;
     sig->ac = argc;
     sig->message = 0;
+    sig->boll = 0;
     if (argc == 2)
         sig->map = fill_map(argv[1], sig->map, coord);
     if (argc == 3)
