@@ -24,7 +24,7 @@ void receive_message(int signum)
     if (signum == SIGUSR2)
         sig->message |= (0 << sig->boll);
     sig->boll++;
-    (usleep(6000);
+    usleep(6000);
 }
 
 int game(int ac, char **av)
