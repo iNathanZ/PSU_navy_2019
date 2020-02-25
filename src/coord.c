@@ -39,7 +39,11 @@ char **fill_map(char const *filepath, char **array, coord_t *coord)
     if (fd == -1)
         return (NULL);
     while (read(fd, buffer, 8) != 0) {
-        //CHECK_FILE;
+        CHECK_FILE;
+        if (a != 0) {
+            array[0][0] = '$';
+            return (array);
+        }
         FILL_STRUCT;
         array = fill_coord(array, coord);
     }
