@@ -28,13 +28,13 @@
 #define CHECK_BOAT (array[coord[1] - 49][coord[0] - 65] == '2' || array[coord[1] - 49][coord[0] - 65] == '3' || array[coord[1] - 49][coord[0] - 65] == '4' || array[coord[1] - 49][coord[0] - 65] == '5');
 
 #define CHECK_FILE if ((buffer[0] < 50 && buffer[0] > 53) || (buffer[3] <= 48 && buffer[6] >= 56) || (buffer[6] <= 48 && buffer[6] >= 56))\
-            a++;
+            a++;\
         if (buffer[1] != ':' || buffer[4] != ':')\
-            a++;
+            a++;\
         if ((buffer[2] < 65 && buffer[5] != 72) || (buffer[5] < 65 && buffer[5] != 72))\
-            a++;
+            a++;\
         if (buffer[3] == buffer[6] && buffer[0]  - '0' != buffer[5] - buffer[2] + 1)\
-            a++;
+            a++;\
         if (buffer[3] != buffer[6] && buffer[0] - '0' != (buffer[6] - '0') - (buffer[3] - '0') + 1)\
             a++;
 
