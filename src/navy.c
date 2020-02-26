@@ -54,6 +54,10 @@ int main(int argc, char *argv[])
     struct sigaction act;
     coord_t *coord = malloc(sizeof(coord_t));
 
+    if (argc == 2 && argv[1][0] == '-' && argv[1][1] == 'h') {
+        ZGA;
+        return (0);
+    }
     sig = create_struct(id1, argv, argc, coord);
     act.sa_sigaction = get_pid;
     act.sa_flags = SA_SIGINFO;
@@ -66,10 +70,13 @@ int main(int argc, char *argv[])
         write(1, "successfuly connected\n", 22);
         beggining();
     }
-    if (argc == 2) {
+    else if (argc == 2) {
         my_printf("waiting for enemy connection ...\n");
         pause();
         my_printf("\nenemy connected\n");
+    }
+    else {
+        return (0);
     }
     game(argc, argv);
     free(coord);
