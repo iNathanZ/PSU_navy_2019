@@ -69,15 +69,12 @@ int main(int argc, char *argv[])
             return (84);
         write(1, "successfuly connected\n", 22);
         beggining();
-    }
-    else if (argc == 2) {
+    } else if (argc == 2) {
         my_printf("waiting for enemy connection ...\n");
         pause();
         my_printf("\nenemy connected\n");
-    }
-    else {
+    } else
         return (0);
-    }
     game(argc, argv);
     free(coord);
     return 0;
