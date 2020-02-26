@@ -50,7 +50,7 @@ int check_file(char const *filepath)
     int j = 0;
     int fd = open_fd(filepath);
 
-    if (fd == -1 || fopen(filepath) == NULL)
+    if (fd == -1 || fopen(filepath, "r") == NULL)
         return (1);
     while (read(fd, buffer, 8) != 0)
         CHECK_FILE;
