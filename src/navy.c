@@ -59,6 +59,8 @@ int main(int argc, char *argv[])
         return (0);
     }
     sig = create_struct(id1, argv, argc, coord);
+    if (sig->map[0][0] == '$')
+        return (84);
     act.sa_sigaction = get_pid;
     act.sa_flags = SA_SIGINFO;
     sigaction(SIGUSR2, &act, NULL);
