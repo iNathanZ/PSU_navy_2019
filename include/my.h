@@ -50,13 +50,15 @@ char **mem_alloc_2d_array(void);
 void print_map(char **arr);
 void print_arr(char **arr);
 int open_fd(char const *filepath);
-int is_there_boat(char **array);
+int is_there_boat(char **array, int pid);
 char **get_coord(char coord1, char coord2, char **arr, char boat);
 int game(int ac, char **av);
 void receive_message(int signum);
 int case_of_player_one(char *answer);
 int case_of_player_two(char *answer);
+void send_signal_player(char *answer, int pid, int action);
 char **fill_coord(char **array, coord_t *coord);
 char **fill_map(char const *filepath, char **array, coord_t *coord);
 void stop_for_me(int pid);
+void response(void);
 

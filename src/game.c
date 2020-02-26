@@ -13,6 +13,19 @@
 #include "../include/my.h"
 #include "../include/structures.h"
 
+void response(void)
+{
+    int value = sig->message & 7;
+
+    signal(SIGUSR1, receive_message);
+    signal(SIGUSR2, receive_message);
+    printf("value = %d\n", value);
+    if (value == 6) {
+        // my_printf("%s : hit\n", coord);
+        write(1, "ok\n", 3);
+    }
+}
+
 void receive_message(int signum)
 {
     signal(SIGUSR1, receive_message);
@@ -41,16 +54,28 @@ int game(int ac, char **av)
                 return (0);
     }
 }
+int is_it_good(char **array, char *coord, int pid)
+{
+    if (array[coord[1] - 49][coord[0] - 65] != '.') {
+        my_printf("%s: hit\n", coord);
+        get_coord(coord[0], coord[1], array, 'x');
+        send_signal_player(coord,pid, 6);
+        free(coord);
+        return (1);
+    }
+    get_coord(coord[0], coord[1], array, 'o');
+    my_printf("%s: missed\n", coord);
+    free(coord);
+    return (1);
+}
 
-int is_there_boat(char **array)
+int is_there_boat(char **array, int pid)
 {
     char *coord = malloc(sizeof(char) * 3);
     int count = 0;
     int value = 0;
     int mask = 0;
 
-    for (int tmp = 0; tmp < sig->boll; tmp++)
-        printf("mes = %d\n", sig->message >> tmp & 1);
     for (; count < 3; count++)
         value |= sig->message & 7;
     if (value == 7)
@@ -62,14 +87,5 @@ int is_there_boat(char **array)
     value = sig->message >> 6;
     coord[1] = value + 49;
     printf("coord 0 %c\ncoord 1 = %c\n", coord[0], coord[1]);
-    if (array[coord[1] - 49][coord[0] - 65] != '.') {
-        my_printf("%s: hit\n", coord);
-        get_coord(coord[0], coord[1], array, 'x');
-        free(coord);
-        return (1);
-    }
-    get_coord(coord[0], coord[1], array, 'o');
-    my_printf("%s: missed\n", coord);
-    free(coord);
-    return (1);
+    return (is_it_good(array, coord, pid));
 }

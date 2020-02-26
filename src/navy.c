@@ -45,7 +45,7 @@ void beggining(void)
     signal(SIGUSR1, receive_message);
     signal(SIGUSR2, receive_message);
     pause();
-    is_there_boat(sig->map);
+    is_there_boat(sig->map, sig->pid_player_one);
 }
 
 int main(int argc, char *argv[])
