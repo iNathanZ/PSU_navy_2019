@@ -84,7 +84,7 @@ int game(int ac, char **av)
 
 int is_it_good(char **array, char *coord, int pid)
 {
-    if (array[coord[1] - 49][coord[0] - 65] != '.') {
+    if BOAT_THERE {
         my_printf("%s: hit\n", coord);
         get_coord(coord[0], coord[1], array, 'x');
         send_signal_player(coord,pid, 6);
