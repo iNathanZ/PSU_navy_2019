@@ -84,4 +84,4 @@ char **fill_map(char const *filepath, char **array, coord_t *coord);
 void stop_for_me(int pid);
 int response(char *answer);
 int check_file(char const *filepath);
-
+int nbr_of_boat(char **array);

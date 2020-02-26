@@ -29,6 +29,7 @@ bin_t *create_struct(__pid_t id1, char **argv, int argc, coord_t *coord)
     sig->ac = argc;
     sig->message = 0;
     sig->boll = 0;
+    sig->finish = 0;
     if (argc == 2)
         sig->map = fill_map(argv[1], sig->map, coord);
     if (argc == 3)
@@ -44,6 +45,7 @@ void beggining(void)
     print_map(sig->enemy_map);
     signal(SIGUSR1, receive_message);
     signal(SIGUSR2, receive_message);
+    write(1, "\nwaiting for enemy's attack...\n\n", 31);
     pause();
     is_there_boat(sig->map, sig->pid_player_one);
 }
@@ -63,7 +65,8 @@ int main(int argc, char *argv[])
     act.sa_flags = SA_SIGINFO;
     sigaction(SIGUSR2, &act, NULL);
     FRANPRIXXX;
-    game(argc, argv);
+    if (game(argc, argv) == 1)
+        return (1);
     free(coord);
     return 0;
 }
