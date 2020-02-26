@@ -40,6 +40,21 @@
         if (buffer[3] != buffer[6] && buffer[0] - '0' != (buffer[6] - '0') - (buffer[3] - '0') + 1)\
             a++;
 
+#define FRANPRIXXX if (argc == 3) {\
+        my_printf("my_pid:  %d\n", (int) id1);\
+        sig->pid_player_one = my_getnbr(argv[1]);\
+        if (kill(my_getnbr(argv[1]), SIGUSR2) != 0)\
+            return (84);\
+        write(1, "successfuly connected\n", 22);\
+        beggining();\
+    } else if (argc == 2) {\
+        my_printf("my_pid:  %d\n", (int) id1);\
+        my_printf("waiting for enemy connection ...\n");\
+        pause();\
+        my_printf("\nenemy connected\n");\
+    } else\
+        return (0);
+
 char *get_next_line(int fd);
 char *my_append_char(char *str, char c);
 int my_strlen(char const *str);
