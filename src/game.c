@@ -79,8 +79,6 @@ int is_there_boat(char **array, int pid)
     int value = 0;
     int mask = 0;
 
-    for (int count = 0; count < sig->boll; count++)
-        printf("mes = %d\n", sig->message >> count & 1);
     for (; count < 3; count++)
         value |= sig->message & 7;
     if (value == 7)
@@ -91,6 +89,5 @@ int is_there_boat(char **array, int pid)
     coord[0] = value + 65;
     value = sig->message >> 6;
     coord[1] = value + 49;
-    printf("coord 0 %c\ncoord 1 = %d\n", coord[0], coord[1]);
     return (is_it_good(array, coord, pid));
 }
