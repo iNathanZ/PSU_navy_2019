@@ -7,6 +7,7 @@
 
 #include "../include/my.h"
 #include "../include/structures.h"
+
 char **get_coord(char coord1, char coord2, char **arr, char boat)
 {
     arr[coord2 - 49][coord1 - 65] = boat;
@@ -31,21 +32,29 @@ char **fill_coord(char **array, coord_t *coord)
 char **fill_map(char const *filepath, char **array, coord_t *coord)
 {
     char *buffer = malloc(sizeof(char) * 32);
-    int a = 0;
     char *content = malloc(sizeof(char) * 7);
-    int j = 0;
     int fd = open_fd(filepath);
 
     if (fd == -1)
         return (NULL);
     while (read(fd, buffer, 8) != 0) {
-        CHECK_FILE;
-        if (a != 0) {
-            array[0][0] = '$';
-            return (array);
-        }
         FILL_STRUCT;
         array = fill_coord(array, coord);
     }
     return (array);
+}
+
+int check_file(char const *filepath)
+{
+    char *buffer = malloc(sizeof(char) * 32);
+    char *content = malloc(sizeof(char) * 7);
+    int j = 0;
+    int fd = open_fd(filepath);
+
+    if (fd == -1)
+        return (1);
+    while (read(fd, buffer, 8) != 0) {
+        CHECK_FILE;
+    }
+    return (0);
 }

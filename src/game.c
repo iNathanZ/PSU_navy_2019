@@ -13,16 +13,18 @@
 #include "../include/my.h"
 #include "../include/structures.h"
 
-void response(void)
+int response(void)
 {
     int value = sig->message & 7;
 
     signal(SIGUSR1, receive_message);
     signal(SIGUSR2, receive_message);
-    printf("value = %d\n", value);
     if (value == 6) {
-        // my_printf("%s : hit\n", coord);
-        write(1, "ok\n", 3);
+        write(1, "hit\n", 4);
+        sig->message = 0;
+        sig->boll = 0;
+        pause();
+        return (1);
     }
 }
 
@@ -37,6 +39,7 @@ void receive_message(int signum)
     if (signum == SIGUSR2)
         sig->message |= (0 << sig->boll);
     sig->boll++;
+    printf("icici\n");
     usleep(6000);
 }
 
@@ -76,6 +79,8 @@ int is_there_boat(char **array, int pid)
     int value = 0;
     int mask = 0;
 
+    for (int count = 0; count < sig->boll; count++)
+        printf("mes = %d\n", sig->message >> count & 1);
     for (; count < 3; count++)
         value |= sig->message & 7;
     if (value == 7)
@@ -86,6 +91,6 @@ int is_there_boat(char **array, int pid)
     coord[0] = value + 65;
     value = sig->message >> 6;
     coord[1] = value + 49;
-    printf("coord 0 %c\ncoord 1 = %c\n", coord[0], coord[1]);
+    printf("coord 0 %c\ncoord 1 = %d\n", coord[0], coord[1]);
     return (is_it_good(array, coord, pid));
 }

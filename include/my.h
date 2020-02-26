@@ -30,15 +30,34 @@
 #define CHECK_BOAT (array[coord[1] - 49][coord[0] - 65] == '2' || array[coord[1] - 49][coord[0] - 65] == '3' || array[coord[1] - 49][coord[0] - 65] == '4' || array[coord[1] - 49][coord[0] - 65] == '5');
 
 #define CHECK_FILE if ((buffer[0] < 50 && buffer[0] > 53) || (buffer[3] <= 48 && buffer[6] >= 56) || (buffer[6] <= 48 && buffer[6] >= 56))\
-            a++;\
+            return (1);\
         if (buffer[1] != ':' || buffer[4] != ':')\
-            a++;\
+            return (1);\
         if ((buffer[2] < 65 && buffer[5] != 72) || (buffer[5] < 65 && buffer[5] != 72))\
-            a++;\
+            return (1);\
         if (buffer[3] == buffer[6] && buffer[0]  - '0' != buffer[5] - buffer[2] + 1)\
-            a++;\
+            return (1);\
         if (buffer[3] != buffer[6] && buffer[0] - '0' != (buffer[6] - '0') - (buffer[3] - '0') + 1)\
-            a++;
+            return (1);
+
+#define FRANPRIXXX if (argc == 3) {\
+        if (check_file(argv[2]) == 1)\
+            return (84);\
+        my_printf("my_pid:  %d\n", (int) id1);\
+        sig->pid_player_one = my_getnbr(argv[1]);\
+        if (kill(my_getnbr(argv[1]), SIGUSR2) != 0)\
+            return (84);\
+        write(1, "successfuly connected\n", 22);\
+        beggining();\
+    } else if (argc == 2) {\
+        if (check_file(argv[1]) == 1)\
+            return (84);\
+        my_printf("my_pid:  %d\n", (int) id1);\
+        my_printf("waiting for enemy connection ...\n");\
+        pause();\
+        my_printf("\nenemy connected\n");\
+    } else\
+        return (0);
 
 char *get_next_line(int fd);
 char *my_append_char(char *str, char c);
@@ -63,5 +82,6 @@ int my_strcmp(char const *s1, char const *s2);
 char **fill_coord(char **array, coord_t *coord);
 char **fill_map(char const *filepath, char **array, coord_t *coord);
 void stop_for_me(int pid);
-void response(void);
+int response(void);
+int check_file(char const *filepath);
 
