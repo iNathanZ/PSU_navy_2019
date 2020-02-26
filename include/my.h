@@ -38,6 +38,8 @@
         if (buffer[3] == buffer[6] && buffer[0]  - '0' != buffer[5] - buffer[2] + 1)\
             return (1);\
         if (buffer[3] != buffer[6] && buffer[0] - '0' != (buffer[6] - '0') - (buffer[3] - '0') + 1)\
+            return (1);\
+        if (buffer[2] != buffer[5] && buffer[3] != buffer[6])\
             return (1);
 
 #define FRANPRIXXX if (argc == 3) {\
@@ -58,6 +60,8 @@
         my_printf("\nenemy connected\n");\
     } else\
         return (0);
+
+#define BOAT_THERE (array[coord[1] - 49][coord[0] - 65] == '2' || array[coord[1] - 49][coord[0] - 65] == '3' || array[coord[1] - 49][coord[0] - 65] == '4' || array[coord[1] - 49][coord[0] - 65] == '5');
 
 char *get_next_line(int fd);
 char *my_append_char(char *str, char c);

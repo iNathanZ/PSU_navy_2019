@@ -47,15 +47,13 @@ char **fill_map(char const *filepath, char **array, coord_t *coord)
 int check_file(char const *filepath)
 {
     char *buffer = malloc(sizeof(char) * 32);
-    char *content = malloc(sizeof(char) * 7);
     int j = 0;
     int fd = open_fd(filepath);
 
-    if (fd == -1)
+    if (fd == -1 || fopen(filepath) == NULL)
         return (1);
-    while (read(fd, buffer, 8) != 0) {
+    while (read(fd, buffer, 8) != 0)
         CHECK_FILE;
-    }
     return (0);
 }
 
