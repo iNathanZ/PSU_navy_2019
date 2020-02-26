@@ -58,3 +58,16 @@ int check_file(char const *filepath)
     }
     return (0);
 }
+
+int nbr_of_boat(char **array)
+{
+    int n = 0;
+
+    for (int i = 0 ; i != 8 ; i++) {
+        for (int j = 0 ; j != 8 ; j != 8) {
+            if (array[i][j] == '2' || array[i][j] == '3' || array[i][j] == '4' || array[i][j] == '5')
+                n++;
+        }
+    }
+    return (n);
+}
