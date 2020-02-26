@@ -82,6 +82,6 @@ int my_strcmp(char const *s1, char const *s2);
 char **fill_coord(char **array, coord_t *coord);
 char **fill_map(char const *filepath, char **array, coord_t *coord);
 void stop_for_me(int pid);
-int response(void);
+int response(char *answer);
 int check_file(char const *filepath);
 

@@ -13,16 +13,25 @@
 #include "../include/my.h"
 #include "../include/structures.h"
 
-int response(void)
+int response(char *answer)
 {
     int value = sig->message & 7;
 
     signal(SIGUSR1, receive_message);
     signal(SIGUSR2, receive_message);
     if (value == 6) {
-        write(1, "hit\n", 4);
+        printf("%c%c : hit\n", answer[0], answer[1]);
         sig->message = 0;
         sig->boll = 0;
+        write(1, "\nwaiting for enemy's attack...\n", 31);
+        pause();
+        return (1);
+    }
+    if (value == 5) {
+        printf("%c%c : missed\n", answer[0], answer[1]);
+        sig->message = 0;
+        sig->boll = 0;
+        write(1, "\nwaiting for enemy's attack...\n\n", 31);
         pause();
         return (1);
     }
@@ -39,7 +48,6 @@ void receive_message(int signum)
     if (signum == SIGUSR2)
         sig->message |= (0 << sig->boll);
     sig->boll++;
-    printf("icici\n");
     usleep(6000);
 }
 
@@ -57,6 +65,7 @@ int game(int ac, char **av)
                 return (0);
     }
 }
+
 int is_it_good(char **array, char *coord, int pid)
 {
     if (array[coord[1] - 49][coord[0] - 65] != '.') {
@@ -68,6 +77,7 @@ int is_it_good(char **array, char *coord, int pid)
     }
     get_coord(coord[0], coord[1], array, 'o');
     my_printf("%s: missed\n", coord);
+    send_signal_player(coord, pid, 5);
     free(coord);
     return (1);
 }
