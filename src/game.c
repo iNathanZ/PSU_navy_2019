@@ -13,14 +13,17 @@
 #include "../include/my.h"
 #include "../include/structures.h"
 
-int response(char *answer)
+int response(char *answer, char **ennemy_map)
 {
     int value = sig->message & 7;
 
     signal(SIGUSR1, receive_message);
     signal(SIGUSR2, receive_message);
     if (value == 6) {
-        printf("%c%c : hit\n", answer[0], answer[1]);
+        my_putchar(answer[0]);
+        my_putchar(answer[1]);
+        write (1, " : hit\n", 7);
+        get_coord(answer[0], answer[1], ennemy_map, 'x');
         sig->message = 0;
         sig->boll = 0;
         write(1, "\nwaiting for enemy's attack...\n", 31);
@@ -28,7 +31,10 @@ int response(char *answer)
         return (1);
     }
     if (value == 5) {
-        printf("%c%c : missed\n", answer[0], answer[1]);
+        my_putchar(answer[0]);
+        my_putchar(answer[1]);
+        write (1, " : missed\n", 11);
+        get_coord(answer[0], answer[1], ennemy_map, 'o');
         sig->message = 0;
         sig->boll = 0;
         write(1, "\nwaiting for enemy's attack...\n\n", 31);
