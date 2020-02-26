@@ -19,6 +19,8 @@
 #define READ_SIZE 16
 #endif
 
+#define ZGA my_printf("USAGE\n     ./navy [first_player_pid] navy_positions\nDESCRIPTION\n     first_player_pid: only for the 2nd player. pid of the first player.\n     navy_positions: file representing the positions of the ships.\n");
+
 #define FILL_STRUCT coord->boat = buffer[0];\
                     coord->x1 = buffer[2];\
                     coord->y1 = buffer[3];\
@@ -57,6 +59,7 @@ void receive_message(int signum);
 int case_of_player_one(char *answer);
 int case_of_player_two(char *answer);
 void send_signal_player(char *answer, int pid, int action);
+int my_strcmp(char const *s1, char const *s2);
 char **fill_coord(char **array, coord_t *coord);
 char **fill_map(char const *filepath, char **array, coord_t *coord);
 void stop_for_me(int pid);
