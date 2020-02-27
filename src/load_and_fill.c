@@ -69,7 +69,6 @@ void print_map(char **arr)
 
 int open_fd(char const *filepath)
 {
-    char *buffer = malloc(sizeof(char) * 10);
     int fd = open(filepath, O_RDONLY);
 
     if (fd == -1) {

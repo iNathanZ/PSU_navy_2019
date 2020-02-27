@@ -23,6 +23,7 @@ struct bin
     char **enemy_map;
     int message;
     int boll;
+    int finish;
     int pid_player_two;
     int pid_player_one;
     char **av;
