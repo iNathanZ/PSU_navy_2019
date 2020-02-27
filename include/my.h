@@ -63,6 +63,40 @@
 
 #define BOAT_THERE (array[coord[1] - 49][coord[0] - 65] == '2' || array[coord[1] - 49][coord[0] - 65] == '3' || array[coord[1] - 49][coord[0] - 65] == '4' || array[coord[1] - 49][coord[0] - 65] == '5');
 
+#define MAHREZ1 for (int i = coord->y1 ; i != coord->y2 ; i++) {\
+            if (array[coord->x1][i] != '.') {\
+                array[0][0] = '$';\
+                return (array);\
+            }\
+            get_coord(coord->x1, i, array, coord->boat);\
+        };
+
+#define MAHREZ2 for (int i = coord->x1 ; i != coord->x2 ; i++) {\
+            if (array[i][coord->y1] != '.') {\
+                array[0][0] = '$';\
+                return (array);\
+            }\
+            get_coord(i, coord->y1, array, coord->boat);\
+        };
+
+#define GUARDIOLA if (sig->message & 7 == 7)\
+        return (0);\
+    write(1, "\nattack: ", 9);\
+    if (getline(&answer, &len,stdin) == EOF) {\
+        stop_for_me(sig->pid_player_two);\
+        return (0);\
+    }\
+    while ((answer[0] < 65 || answer[0] > 72) || (answer[1] < 49 || answer[1] > 56) || my_strlen(answer) != 3) {\
+        write (1, "wrong position\nattack: ", 23);\
+        if (getline(&answer, &len,stdin) == EOF)\
+            return (0);\
+    }\
+    send_signal_player(answer, sig->pid_player_two, 0);\
+    response(answer);\
+        if (is_there_boat(sig->map, sig->pid_player_two) == 0)\
+            return (0);\
+    sig->boll = 0;
+
 char *get_next_line(int fd);
 char *my_append_char(char *str, char c);
 int my_strlen(char const *str);

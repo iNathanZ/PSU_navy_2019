@@ -19,22 +19,10 @@ char **fill_coord(char **array, coord_t *coord)
     get_coord(coord->x1, coord->y1, array, coord->boat);
     get_coord(coord->x2, coord->y2, array, coord->boat);
     if (coord->x1 == coord->x1) {
-        for (int i = coord->y1 ; i != coord->y2 ; i++) {
-            if (array[coord->x1][i] != '.') {
-                array[0][0] = '$';
-                return (array);
-            }
-            get_coord(coord->x1, i, array, coord->boat);
-        }
+        MAHREZ1;
     }
     if (coord->y1 == coord->y2) {
-        for (int i = coord->x1 ; i != coord->x2 ; i++) {
-            if (array[i][coord->y1] != '.') {
-                array[0][0] = '$';
-                return (array);
-            }
-            get_coord(i, coord->y1, array, coord->boat);
-        }
+        MAHREZ2;
     }
     return (array);
 }
@@ -61,15 +49,17 @@ int check_file(char const *filepath)
     char *buffer = malloc(sizeof(char) * 32);
     int j = 0;
     int fd = open_fd(filepath);
-    int i = 0;
+    int i = 2;
 
     if (fd == -1 || fopen(filepath) == NULL)
         return (1);
     while (read(fd, buffer, 8) != 0) {
         CHECK_FILE;
+        if (i != buffer[0] - 48)
+            return (1);
         i++;
     }
-    if (i != 4)
+    if (i != 5)
         return (1);
     return (0);
 }
