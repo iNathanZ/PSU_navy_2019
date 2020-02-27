@@ -26,7 +26,7 @@ int response(char *answer)
         get_coord(answer[0], answer[1], sig->enemy_map, 'x');
         sig->message = 0;
         sig->boll = 0;
-        if (tmp != 4) {
+        if (tmp != 4 && sig->ac == 2) {
             write(1, "\nwaiting for enemy's attack...\n", 31);
             pause();
             return (1);

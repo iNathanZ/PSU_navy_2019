@@ -46,10 +46,6 @@ int case_of_player_two(char *answer)
 {
     ssize_t len = 0;
 
-    write (1, "\nmy positions:\n", 15);
-    print_map(sig->map);
-    write (1, "\nenemy’s positions:\n", 22);
-    print_map(sig->enemy_map);
     signal(SIGUSR1, receive_message);
     signal(SIGUSR2, receive_message);
     if (sig->message & 7 == 7)
@@ -71,6 +67,12 @@ int case_of_player_two(char *answer)
     send_signal_player(answer, sig->pid_player_one, 0);
     if (response(answer) == 2)
         return (0);
+    write (1, "\nmy positions:\n", 15);
+    print_map(sig->map);
+    write (1, "\nenemy’s positions:\n", 22);
+    print_map(sig->enemy_map);
+    write(1, "\nwaiting for enemy's attack...\n\n", 31);
+    pause();
     if (is_there_boat(sig->map, sig->pid_player_one) == 0)
         return (0);
 }
