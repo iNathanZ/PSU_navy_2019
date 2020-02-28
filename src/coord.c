@@ -19,10 +19,22 @@ char **fill_coord(char **array, coord_t *coord)
     get_coord(coord->x1, coord->y1, array, coord->boat);
     get_coord(coord->x2, coord->y2, array, coord->boat);
     if (coord->x1 == coord->x1) {
-        MAHREZ1;
+    for (int i = coord->y1 ; i != coord->y2 ; i++) {
+            if (array[coord->x1][i] != '.') {
+                array[0][0] = '$';
+                return (array);
+            }
+            get_coord(coord->x1, i, array, coord->boat);
+        }
     }
     if (coord->y1 == coord->y2) {
-        MAHREZ2;
+        for (int i = coord->x1 ; i != coord->x2 ; i++) {
+            if (array[i][coord->y1] != '.') {
+                array[0][0] = '$';
+                return (array);
+            }
+            get_coord(i, coord->y1, array, coord->boat);
+        }
     }
     return (array);
 }
