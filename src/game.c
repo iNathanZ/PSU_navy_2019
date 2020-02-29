@@ -5,11 +5,6 @@
 ** game.c
 */
 
-#include <sys/types.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <signal.h>
 #include "../include/my.h"
 #include "../include/structures.h"
 
@@ -17,40 +12,15 @@ int response(char *answer)
 {
     int value = sig->message & 7;
     int tmp = sig->message >> 9;
+
     signal(SIGUSR1, receive_message);
     signal(SIGUSR2, receive_message);
-    if (value == 6) {
-        my_putchar(answer[0]);
-        my_putchar(answer[1]);
-        write (1, " : hit\n", 7);
-        get_coord(answer[0], answer[1], sig->enemy_map, 'x');
-        sig->message = 0;
-        sig->boll = 0;
-        if (tmp != 4 && sig->ac == 2) {
-            write(1, "\nwaiting for enemy's attack...\n", 31);
-            pause();
-            return (1);
-        }
-    }
-    if (value == 5) {
-        my_putchar(answer[0]);
-        my_putchar(answer[1]);
-        write (1, " : missed\n", 11);
-        get_coord(answer[0], answer[1], sig->enemy_map, 'o');
-        sig->message = 0;
-        sig->boll = 0;
-        write(1, "\nwaiting for enemy's attack...\n\n", 31);
-        pause();
+    if (value == 6 && case_of_hit(answer, tmp) == 1)
         return (1);
-    }
-    if (tmp == 4) {
-        write (1, "\nmy positions:\n", 15);
-        print_map(sig->map);
-        write (1, "\nenemy’s positions:\n", 22);
-        print_map(sig->enemy_map);
-        write(1, "\nI won\n", 7);
-        return (2);
-    }
+    if (value == 5)
+        return (case_of_missed(answer));
+    if (tmp == 4)
+        return (case_of_eof());
 }
 
 void receive_message(int signum)
@@ -84,10 +54,11 @@ int game(int ac, char **av)
 
 int is_it_good(char **array, char *coord, int pid)
 {
-    if BOAT_THERE {
+    if (array[coord[1] - 49][coord[0] - 65] >= '2' &&
+    array[coord[1] - 49][coord[0] - 65] <= '5') {
         my_printf("%s: hit\n", coord);
         get_coord(coord[0], coord[1], array, 'x');
-        send_signal_player(coord,pid, 6);
+        send_signal_player(coord, pid, 6);
         free(coord);
         return (1);
     }
@@ -116,14 +87,6 @@ int is_there_boat(char **array, int pid)
     value = sig->message >> 6;
     coord[1] = value + 49;
     is_it_good(array, coord, pid);
-    if (nbr_of_boat(array) == 0) {
-         write (1, "\nmy positions:\n", 15);
-        print_map(sig->map);
-        write (1, "\nenemy’s positions:\n", 22);
-        print_map(sig->enemy_map);
-        write(1, "\nEnemy won\n", 11);
-        send_signal_player("A1", pid, 4);
-        sig->finish = 1;
-        return (0);
-    }
+    if (nbr_of_boat(array) == 0)
+        return (game_over(pid));
 }

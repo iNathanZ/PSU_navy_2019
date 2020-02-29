@@ -28,7 +28,8 @@ struct bin
     int pid_player_one;
     char **av;
     int ac;
-};typedef struct bin bin_t;
+};
+typedef struct bin bin_t;
 
 bin_t *sig;
 #endif

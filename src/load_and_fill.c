@@ -6,13 +6,6 @@
 */
 
 #include "../include/my.h"
-#include <stddef.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
 #include "../include/structures.h"
 
 char **mem_alloc_2d_array(void)
@@ -31,7 +24,6 @@ char **mem_alloc_2d_array(void)
     array[i] = NULL;
     return (array);
 }
-
 
 void print_arr(char **arr)
 {

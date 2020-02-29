@@ -5,10 +5,6 @@
 ** player_one.c
 */
 
-#include <sys/types.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <signal.h>
 #include "../include/my.h"
 #include "../include/structures.h"
 
@@ -42,6 +38,26 @@ void stop_for_me(int pid)
     }
 }
 
+char *get_answer(char *answer, int pid)
+{
+    ssize_t len = 0;
+
+    write(1, "\nattack: ", 9);
+    if (getline(&answer, &len, stdin) == EOF) {
+        stop_for_me(pid);
+        return (NULL);
+    }
+    while ((answer[0] < 65 || answer[0] > 72) || (answer[1] < 49 ||
+    answer[1] > 56) || my_strlen(answer) != 3) {
+        write (1, "wrong position\nattack: ", 23);
+        if (getline(&answer, &len, stdin) == EOF) {
+            stop_for_me(pid);
+            return (NULL);
+        }
+    }
+    return (answer);
+}
+
 int case_of_player_two(char *answer)
 {
     ssize_t len = 0;
@@ -50,19 +66,8 @@ int case_of_player_two(char *answer)
     signal(SIGUSR2, receive_message);
     if (sig->message & 7 == 7)
         return (0);
-    write(1, "\nattack: ", 9);
-    if (getline(&answer, &len,stdin) == EOF) {
-        stop_for_me(sig->pid_player_one);
+    if ((answer = get_answer(answer, sig->pid_player_one)) == NULL)
         return (0);
-    }
-    while ((answer[0] < 65 || answer[0] > 72) || (answer[1] < 49 ||
-    answer[1] > 56) || my_strlen(answer) != 3) {
-        write (1, "wrong position\nattack: ", 23);
-        if (getline(&answer, &len,stdin) == EOF) {
-            stop_for_me(sig->pid_player_two);
-            return (0);
-        }
-    }
     sig->boll = 0;
     send_signal_player(answer, sig->pid_player_one, 0);
     if (response(answer) == 2)
@@ -79,7 +84,6 @@ int case_of_player_two(char *answer)
 
 int case_of_player_one(char *answer)
 {
-    ssize_t len = 0;
 
     write (1, "\nmy positions:\n", 15);
     print_map(sig->map);
@@ -89,34 +93,13 @@ int case_of_player_one(char *answer)
     signal(SIGUSR2, receive_message);
     if (sig->message & 7 == 7)
         return (0);
-    write(1, "\nattack: ", 9);
-    if (getline(&answer, &len,stdin) == EOF) {
-        stop_for_me(sig->pid_player_two);
+    if ((answer = get_answer(answer, sig->pid_player_two)) == NULL)
         return (0);
-<<<<<<< HEAD
-    } while ((answer[0] < 65 || answer[0] > 72) || (answer[1] < 49 || answer[1] > 56) || my_strlen(answer) != 3) {
-=======
-    }
-    while ((answer[0] < 65 || answer[0] > 72) || (answer[1] < 49 ||
-    answer[1] > 56) || my_strlen(answer) != 3) {
->>>>>>> 3ac1c6534cdf3a4400c7ac6eb073da62e719c8a6
-        write (1, "wrong position\nattack: ", 23);
-        if (getline(&answer, &len,stdin) == EOF) {
-            stop_for_me(sig->pid_player_two);
-            return (0);
-<<<<<<< HEAD
-    } send_signal_player(answer, sig->pid_player_two, 0);
-    response(answer);
-        if (is_there_boat(sig->map, sig->pid_player_two) == 0)
-            return (0);
-=======
-        }
-    }
     send_signal_player(answer, sig->pid_player_two, 0);
     if (response(answer) == 2)
         return (0);
     if (is_there_boat(sig->map, sig->pid_player_two) == 0)
         return (0);
->>>>>>> 3ac1c6534cdf3a4400c7ac6eb073da62e719c8a6
     sig->boll = 0;
 }
+

@@ -50,40 +50,30 @@ void beggining(void)
     is_there_boat(sig->map, sig->pid_player_one);
 }
 
+int case_of_flag_h(void)
+{
+    write(1, "USAGE\n     ./navy [first_player_pid] navy_positions\n", 52);
+    write(1, "DESCRIPTION\n     first_player_pid: only for the 2nd", 51);
+    write(1, " player. pid of the first player.\n     navy_positions:", 55);
+    write(1, " file representing the positions of the ships.\n", 47);
+    return (0);
+}
+
 int main(int argc, char *argv[])
 {
     pid_t id1 = getpid();
     struct sigaction act;
     coord_t *coord = malloc(sizeof(coord_t));
+    int ret;
 
-    if (argc == 2 && argv[1][0] == '-' && argv[1][1] == 'h') {
-        ZGA;
-        return (0);
-    }
+    if (argc == 2 && argv[1][0] == '-' && argv[1][1] == 'h')
+        return (case_of_flag_h());
     sig = create_struct(id1, argv, argc, coord);
-    if (sig->map[0][0] == '$')
-        return (84);
     act.sa_sigaction = get_pid;
     act.sa_flags = SA_SIGINFO;
     sigaction(SIGUSR2, &act, NULL);
-    if (argc == 3) {
-        if (check_file(argv[2]) == 1)
-            return (84);
-        my_printf("my_pid:  %d\n", (int) id1);
-        sig->pid_player_one = my_getnbr(argv[1]);
-        if (kill(my_getnbr(argv[1]), SIGUSR2) != 0)
-            return (84);
-        write(1, "successfuly connected\n", 22);
-        beggining();
-    } else if (argc == 2) {
-        if (check_file(argv[1]) == 1)
-            return (84);
-        my_printf("my_pid:  %d\n", (int) id1);
-        my_printf("waiting for enemy connection ...\n");
-        pause();
-        my_printf("\nenemy connected\n");
-    } else
-        return (0);
+    if ((ret = error(argc, argv, sig->pid_player_one)) != 1)
+        return (ret);
     if (game(argc, argv) == 1)
         return (1);
     free(coord);

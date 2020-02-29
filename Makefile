@@ -14,9 +14,10 @@ SRC 	=	src/navy.c				\
 			src/my_putchar.c 		\
 			src/load_and_fill.c 	\
 			src/game.c 				\
-			src/players.c 		\
+			src/players.c 			\
 			src/coord.c 			\
 			src/my_strlen.c 		\
+			src/cases.c 			\
 
 OBJ 	= 	$(SRC:.c=.o)
 
