@@ -79,7 +79,6 @@ int error(int argc, char **argv, int id1)
         write(1, "successfuly connected\n", 22);
         beggining();
     } else if (argc == 2) {
-        write (1, "z", 1);
         if (check_file(argv[1]) == 1)
             return (84);
         my_printf("my_pid:  %d\n", (int) id1);
