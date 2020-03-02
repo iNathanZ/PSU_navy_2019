@@ -48,12 +48,21 @@ int check_file(char const *filepath)
 {
     char *buffer = malloc(sizeof(char) * 32);
     int j = 0;
+    int i = 2;
     int fd = open_fd(filepath);
 
-    if (fd == -1 || fopen(filepath, "r") == NULL)
+    if (fd == -1 || fopen(filepath, "r") == NULL) {
+        printf("errrrr");
         return (1);
-    while (read(fd, buffer, 8) != 0)
+    }
+    while (read(fd, buffer, 8) != 0) {
         CHECK_FILE;
+        if (i != buffer[0] - 48)
+            return (1);
+        i++;
+    }
+    if (i != 6)
+        return (1);
     return (0);
 }
 

@@ -69,23 +69,24 @@ int game_over(int pid)
 
 int error(int argc, char **argv, int id1)
 {
-    if (argc == 3) {\
-        if (check_file(argv[2]) == 1)\
-            return (84);\
-        my_printf("my_pid:  %d\n", (int) id1);\
-        sig->pid_player_one = my_getnbr(argv[1]);\
-        if (kill(my_getnbr(argv[1]), SIGUSR2) != 0)\
-            return (84);\
-        write(1, "successfuly connected\n", 22);\
-        beggining();\
-    } else if (argc == 2) {\
-        if (check_file(argv[1]) == 1)\
-            return (84);\
-        my_printf("my_pid:  %d\n", (int) id1);\
-        my_printf("waiting for enemy connection ...\n");\
-        pause();\
-        my_printf("\nenemy connected\n");\
-    } else\
+    if (argc == 3) {
+        if (check_file(argv[2]) == 1)
+            return (84);
+        my_printf("my_pid:  %d\n", (int) id1);
+        sig->pid_player_one = my_getnbr(argv[1]);
+        if (kill(my_getnbr(argv[1]), SIGUSR2) != 0)
+            return (84);
+        write(1, "successfuly connected\n", 22);
+        beggining();
+    } else if (argc == 2) {
+        write (1, "z", 1);
+        if (check_file(argv[1]) == 1)
+            return (84);
+        my_printf("my_pid:  %d\n", (int) id1);
+        my_printf("waiting for enemy connection ...\n");
+        pause();
+        my_printf("\nenemy connected\n");
+    } else
         return (0);
     return (1);
 }

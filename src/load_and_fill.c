@@ -64,8 +64,17 @@ int open_fd(char const *filepath)
     int fd = open(filepath, O_RDONLY);
 
     if (fd == -1) {
-        write (2, "Open failed\n", 11);
         return (fd);
     }
     return (fd);
+}
+
+int check_dir(char const *filepath)
+{
+    int fd = open_fd(filepath);
+    char buffer[10];
+
+    if (read(fd, buffer, 9) == -1)
+        return (84);
+    return (0);
 }

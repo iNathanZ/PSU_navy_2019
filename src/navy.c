@@ -68,6 +68,8 @@ int main(int argc, char *argv[])
 
     if (argc == 2 && argv[1][0] == '-' && argv[1][1] == 'h')
         return (case_of_flag_h());
+    if (check_arg_exist(argc, argv) == 84)
+        return (84);
     sig = create_struct(id1, argv, argc, coord);
     act.sa_sigaction = get_pid;
     act.sa_flags = SA_SIGINFO;

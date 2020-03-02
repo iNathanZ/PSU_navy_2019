@@ -17,6 +17,7 @@ SRC 	=	src/navy.c				\
 			src/players.c 			\
 			src/coord.c 			\
 			src/my_strlen.c 		\
+			src/error.c 			\
 			src/cases.c 			\
 
 OBJ 	= 	$(SRC:.c=.o)
