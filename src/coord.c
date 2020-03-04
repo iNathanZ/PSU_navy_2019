@@ -51,10 +51,8 @@ int check_file(char const *filepath)
     int i = 2;
     int fd = open_fd(filepath);
 
-    if (fd == -1 || fopen(filepath, "r") == NULL) {
-        printf("errrrr");
+    if (fd == -1 || fopen(filepath, "r") == NULL)
         return (1);
-    }
     while (read(fd, buffer, 8) != 0) {
         CHECK_FILE;
         if (i != buffer[0] - 48)

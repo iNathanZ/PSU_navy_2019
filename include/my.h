@@ -26,15 +26,19 @@
                     coord->x2 = buffer[5];\
                     coord->y2 = buffer[6];
 
-#define CHECK_FILE if ((buffer[0] < 50 && buffer[0] > 53) || (buffer[3] <= 48 && buffer[6] >= 56) || (buffer[6] <= 48 && buffer[6] >= 56))\
+#define CHECK_FILE if ((buffer[0] < 50 && buffer[0] > 53) ||\
+(buffer[3] <= 48 && buffer[6] >= 56) || (buffer[6] <= 48 && buffer[6] >= 56))\
             return (1);\
         if (buffer[1] != ':' || buffer[4] != ':')\
             return (1);\
-        if ((buffer[2] < 65 && buffer[5] != 72) || (buffer[5] < 65 && buffer[5] != 72))\
+        if ((buffer[2] < 65 && buffer[5] != 72) ||\
+        (buffer[5] < 65 && buffer[5] != 72))\
             return (1);\
-        if (buffer[3] == buffer[6] && buffer[0]  - '0' != buffer[5] - buffer[2] + 1)\
+        if (buffer[3] == buffer[6] &&\
+        buffer[0]  - '0' != buffer[5] - buffer[2] + 1)\
             return (1);\
-        if (buffer[3] != buffer[6] && buffer[0] - '0' != (buffer[6] - '0') - (buffer[3] - '0') + 1)\
+        if (buffer[3] != buffer[6] &&\
+        buffer[0] - '0' != (buffer[6] - '0') - (buffer[3] - '0') + 1)\
             return (1);\
         if (buffer[2] != buffer[5] && buffer[3] != buffer[6])\
             return (1);
@@ -73,3 +77,4 @@ int game_over(int pid);
 int error(int argc, char **argv, int id1);
 void beggining(void);
 int check_arg_exist(int argc, char **argv);
+int gruge(int argc, char **argv);
