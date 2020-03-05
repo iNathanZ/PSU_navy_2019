@@ -21,7 +21,6 @@ int check_arg_exist(int argc, char **argv)
         return (84);
 }
 
-
 int gruge(int argc, char **argv)
 {
     char buffer[10];

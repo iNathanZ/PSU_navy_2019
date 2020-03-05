@@ -15,12 +15,12 @@ int response(char *answer)
 
     signal(SIGUSR1, receive_message);
     signal(SIGUSR2, receive_message);
+    if (tmp == 4)
+        return (case_of_eof());
     if (value == 6 && case_of_hit(answer, tmp) == 1)
         return (1);
     if (value == 5)
         return (case_of_missed(answer));
-    if (tmp == 4)
-        return (case_of_eof());
 }
 
 void receive_message(int signum)
