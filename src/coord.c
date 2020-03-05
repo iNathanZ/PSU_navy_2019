@@ -18,7 +18,7 @@ char **fill_coord(char **array, coord_t *coord)
 {
     get_coord(coord->x1, coord->y1, array, coord->boat);
     get_coord(coord->x2, coord->y2, array, coord->boat);
-    if (coord->x1 == coord->x1) {
+    if (coord->x1 == coord->x2) {
         for (int i = coord->y1 ; i != coord->y2 ; i++)
             get_coord(coord->x1, i, array, coord->boat);
     }
