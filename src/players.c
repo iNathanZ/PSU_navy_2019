@@ -102,4 +102,3 @@ int case_of_player_one(char *answer)
         return (0);
     sig->boll = 0;
 }
-

@@ -40,15 +40,15 @@ void receive_message(int signum)
 int game(int ac, char **av)
 {
     char *answer = NULL;
+    int tmp;
 
     while (1) {
-        if (ac == 2) {
-            if (case_of_player_one(answer) == 0)
-                return (sig->finish);
-        }
+        if (ac == 2)
+            tmp = case_of_player_one(answer);
         else
-            if (case_of_player_two(answer) == 0)
-                return (sig->finish);
+            tmp = case_of_player_two(answer);
+        if (tmp == 0)
+            return (sig->finish);
     }
 }
 
